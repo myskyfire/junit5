@@ -16,6 +16,11 @@ before_install:
 install:
   - echo "Don't let Travis CI execute './gradlew assemble' by default"
 
+stages:
+  - test
+  - name: deploy
+    if: branch = marc/travis-pipeline
+
 matrix:
   include:
     - os: linux
