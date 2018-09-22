@@ -36,6 +36,12 @@ script:
 # Build JUnit 5
   - ./gradlew ${SCAN} ${JACOCO} build ${INSTALL}
 
+jobs:
+  include:
+    - stage: deploy
+      jdk: openjdk11
+      script: ./gradlew --help
+
 after_success:
 # If variable JACOCO is set, run JaCoCo report and send report to codecov.io after build success
   - test -v JACOCO && ./gradlew ${JACOCO} jacocoRootReport && bash <(curl -s https://codecov.io/bash) || true
