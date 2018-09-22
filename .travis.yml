@@ -22,16 +22,6 @@ stages:
     if: branch = marc/travis-pipeline
 
 matrix:
-  include:
-    - os: linux
-      jdk: openjdk11
-    - os: linux
-      jdk: openjdk11
-      env: SCAN='--scan --stacktrace --warning-mode=all' JACOCO='-PenableJaCoCo' INSTALL='publishToMavenLocal'
-    - os: osx
-      jdk: openjdk11
-    - os: linux
-      jdk: openjdk-ea
   allow_failures:
     - jdk: openjdk-ea
 
@@ -43,6 +33,15 @@ script:
 
 jobs:
   include:
+    - os: linux
+      jdk: openjdk11
+    - os: linux
+      jdk: openjdk11
+      env: SCAN='--scan --stacktrace --warning-mode=all' JACOCO='-PenableJaCoCo' INSTALL='publishToMavenLocal'
+    - os: osx
+      jdk: openjdk11
+    - os: linux
+      jdk: openjdk-ea
     - stage: deploy
       jdk: openjdk11
       script: ./gradlew --help
