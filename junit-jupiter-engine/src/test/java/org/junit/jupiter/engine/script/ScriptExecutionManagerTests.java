@@ -123,12 +123,22 @@ class ScriptExecutionManagerTests {
 		assertTrue(exception.getMessage().contains("syntax error"));
 	}
 
+	@Test
+	void javaAsScript() throws Exception {
+		var script = scriptForEngine("java", "return 9 == 9;");
+		assertTrue(Boolean.parseBoolean("" + manager.evaluate(script, bindings)));
+	}
+
 	private Script script(String... lines) {
+		return scriptForEngine(Script.DEFAULT_SCRIPT_ENGINE_NAME, lines);
+	}
+
+	private Script scriptForEngine(String engine, String... lines) {
 		Class<? extends Annotation> type = Test.class;
 		return new Script( //
 			type, //
 			"Mock for " + type, //
-			Script.DEFAULT_SCRIPT_ENGINE_NAME, //
+			engine, //
 			String.join("\n", lines), //
 			Script.DEFAULT_SCRIPT_REASON_PATTERN //
 		);

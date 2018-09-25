@@ -80,6 +80,11 @@ public class ScriptExecutionManager {
 		if (scriptEngine == null) {
 			scriptEngine = scriptEngineManager.getEngineByMimeType(engine);
 		}
+		// TODO Consider "javac" as (additional) keyword?
+		// TODO Provide and use engine factory to instantiate the engine?
+		if (scriptEngine == null && engine.equals("java")) {
+			scriptEngine = new JavaCompilerScriptEngine();
+		}
 		Preconditions.notNull(scriptEngine, () -> "Script engine not found: " + engine);
 
 		Bindings bindings = scriptEngine.getBindings(ScriptContext.GLOBAL_SCOPE);
